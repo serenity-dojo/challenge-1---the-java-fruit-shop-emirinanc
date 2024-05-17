@@ -15,7 +15,7 @@ public class CatalogTest {
     public void shouldBeAbleToUpdateTheCurrentPriceOfAFruit() {
 
         Catalog catalog = catalogWithSomeItemsAndPrices();
-        assertThat(catalog.getPriceOf(Apple)).isEqualTo(4.00);
+        assertThat(catalog.getPriceOf(Apple)).isEqualTo(6.00);
     }
 
     @Test
@@ -125,6 +125,20 @@ public class CatalogTest {
 
         assertThat(noSuchAmount.getMessage()).isEqualTo("no such amount");
     }
+
+    @Test(expected = FruitUnavailableException.class)
+    public void shouldReturnFruitUnavailableExceptionWhenQuantityAvailableIsExceeded() throws FruitUnavailableException {
+        Catalog catalog = catalogWithSomeItemsAndPrices();
+        ShoppingCart cart = new ShoppingCart(catalog);
+        cart.addItem(Pear,1);
+        cart.addItem(Pear,1);
+        cart.addItem(Pear,1);
+        cart.addItem(Pear,0);
+
+        assertThat(cart.calculateSumTotal()).isEqualTo((1*5 + 6*6 + 6*7) * 0.9);
+    }
+
+
 
     private static Catalog catalogWithSomeItemsAndPrices() {
 

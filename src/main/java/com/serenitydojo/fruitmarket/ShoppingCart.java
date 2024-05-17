@@ -15,7 +15,7 @@ public class ShoppingCart {
     }
 
     public Double calculateSumTotal() {
-        double sum = items.stream().mapToDouble(it -> catalog.getPriceOf(it.getFruit()) * it.getAmountInKg()).sum();
+        double sum = items.stream().mapToDouble(it -> catalog.getPriceOf(it.getFruit()) * it.getAmountInKgRequested()).sum();
 
         if(anyFruitAbove5kg()) {
             int discountInPercent = 10;
@@ -29,10 +29,10 @@ public class ShoppingCart {
     public Boolean anyFruitAbove5kg() {
         Map<Fruit, List<CatalogItem>> fruitToItems = items.stream().collect(Collectors.groupingBy(CatalogItem::getFruit));
 
-        return fruitToItems.values().stream().anyMatch(items1 -> items1.stream().mapToInt(CatalogItem::getAmountInKg).sum() >= 5);
+        return fruitToItems.values().stream().anyMatch(items1 -> items1.stream().mapToInt(CatalogItem::getAmountInKgRequested).sum() >= 5);
     }
 
-    public void addItem(Fruit fruit, int amountInKg) {
-            items.add(catalog.getFruit(fruit,amountInKg));
+    public void addItem(Fruit fruit, int amountInKgRequested) {
+            items.add(catalog.getFruit(fruit, amountInKgRequested));
     }
 }
