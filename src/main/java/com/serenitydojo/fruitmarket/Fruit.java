@@ -1,4 +1,4 @@
-package com.serenitydojo;
+package com.serenitydojo.fruitmarket;
 
 public enum Fruit {
     Apple, Orange, Banana, Pear
